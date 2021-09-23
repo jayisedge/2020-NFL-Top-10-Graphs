@@ -70,7 +70,7 @@ def passing(stat):
     plt.figure(figsize=(20,8))
     plt.bar(passing['Player'],passing[stat],color=passing['Color'])
     plt.title('Top 10 Quarterbacks by '+stat+' (2020 Season)')
-    #plt.ylim(7.5)
+    plt.ylim((min(passing[stat]*.8)))
     plt.ylabel(stat)
     plt.xlabel('Quarterback\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
 
@@ -82,7 +82,7 @@ def rushing(stat):
     plt.figure(figsize=(20,8))
     plt.bar(rushing['Player'],rushing[stat],color=rushing['Color'])
     plt.title('Top 10 Players by '+stat+' (2020 Season)')
-    #plt.ylim(7.5)
+    plt.ylim((min(rushing[stat]*.8)))
     plt.ylabel(stat)
     plt.xlabel('Player\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
 
@@ -94,6 +94,6 @@ def receiving(stat):
     plt.figure(figsize=(20,8))
     plt.bar(receiving['Player'],receiving[stat],color=receiving['Color'])
     plt.title('Top 10 Players by '+stat+' (2020 Season)')
-    #plt.ylim(7.5)
+    plt.ylim((min(receiving[stat]*.8)))
     plt.ylabel(stat)
     plt.xlabel('Player\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
