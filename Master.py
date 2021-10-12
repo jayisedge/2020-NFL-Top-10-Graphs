@@ -7,7 +7,7 @@ rec=pd.read_csv('2020 WR.txt')
 
 #Adjust Column Names for Drop Down Boxes
 qb.columns=(['Rank', 'Player', 'Team', 'Age', 'Position', 'Games', 'Games Started', 'Record', 'Completions', 'Attempts','Completion Percentage', 
-             'Pass Yards', 'Passing Touchdowns', 'Touchdown Percentage', 'Interceptions', 'Interception Percentage', '1st Downs', 'Longest Completion', 
+             'Passing Yards', 'Passing Touchdowns', 'Touchdown Percentage', 'Interceptions', 'Interception Percentage', '1st Downs', 'Longest Completion', 
              'Yards Per Attempt', 'Adjusted Yards Per Attempts', 'Yards Per Completion', 'Yards Per Game', 'QBR', 'Total QBR', 'Sacks', 'Sack Yards Lost', 
              'Net Yards Per Attempt', 'Adjusted Net Yards Per Attempt', 'Sack Percentage', '4th Quarter Comebacks', 'Game Winning Drives'])
 
@@ -62,38 +62,20 @@ for color in rec['Color']:
     else:
         pass
     
-def passing(stat):
-    passing=qb.sort_values(stat,ascending=False)
-    passing=passing.head(10)
-    passing=passing.sort_values('Player')
+def top_ten(stat, category):
+    '''Selects Proper Dataframe and Graphs Top 10'''
+    if category=='qb':
+        stat_df=qb.sort_values(stat, ascending=False)
+    elif category=='rush':
+        stat_df=rush.sort_values(stat, ascending=False)
+    else:
+        stat_df=rec.sort_values(stat, ascending=False)
+    stat_df=stat_df.head(10)
+    stat_df=stat_df.sort_values('Player')
     
     plt.figure(figsize=(20,8))
-    plt.bar(passing['Player'],passing[stat],color=passing['Color'])
-    plt.title('Top 10 Quarterbacks by '+stat+' (2020 Season)')
-    plt.ylim((min(passing[stat]*.8)))
-    plt.ylabel(stat)
-    plt.xlabel('Quarterback\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
-
-def rushing(stat):
-    rushing=rush.sort_values(stat,ascending=False)
-    rushing=rushing.head(10)
-    rushing=rushing.sort_values('Player')
-    
-    plt.figure(figsize=(20,8))
-    plt.bar(rushing['Player'],rushing[stat],color=rushing['Color'])
+    plt.bar(stat_df['Player'],stat_df[stat],color=stat_df['Color'])
     plt.title('Top 10 Players by '+stat+' (2020 Season)')
-    plt.ylim((min(rushing[stat]*.8)))
+    plt.ylim((min(stat_df[stat]*.9),(max(stat_df[stat]*1.05))))
     plt.ylabel(stat)
-    plt.xlabel('Player\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
-
-def receiving(stat):
-    receiving=rec.sort_values(stat,ascending=False)
-    receiving=receiving.head(10)
-    receiving=receiving.sort_values('Player')
-    
-    plt.figure(figsize=(20,8))
-    plt.bar(receiving['Player'],receiving[stat],color=receiving['Color'])
-    plt.title('Top 10 Players by '+stat+' (2020 Season)')
-    plt.ylim((min(receiving[stat]*.8)))
-    plt.ylabel(stat)
-    plt.xlabel('Player\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
+    plt.xlabel('\n(* denotes Pro Bowl selection)\n(+ denotes First Team All Pro)')
